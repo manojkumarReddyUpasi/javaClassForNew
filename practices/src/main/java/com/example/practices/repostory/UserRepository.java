@@ -11,7 +11,6 @@ import com.example.practices.entity.User;
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
 	User findByName(String name);
-	
 	User  findByNameAndMobileNumber(String name,String mobilenumber);
 
 

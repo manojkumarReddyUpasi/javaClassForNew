@@ -10,20 +10,15 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user")
 public class User {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	Long id;
-	
 	@Column(name="name",unique = true,nullable = false)
 	String name;
-	
 	@Column(name="fullName")
 	String fullName;
-	
 	@Column(name="email")
 	String email;
-	
 	@Column(name="mobile",unique = true)
 	String mobileNumber;
 

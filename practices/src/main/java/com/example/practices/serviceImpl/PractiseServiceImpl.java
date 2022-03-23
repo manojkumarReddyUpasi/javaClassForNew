@@ -24,11 +24,11 @@ public class PractiseServiceImpl implements PractiseService {
 	
 	@Override
 	public Map<String, String> simple() {
-		
 		Map<String , String> st=new HashMap<>();
 		st.put("name", "manoj");
 		st.put("course", "java");
 		st.put("be", "cool");
+		System.out.println("hey commit");
 		return st;
 	}
 
