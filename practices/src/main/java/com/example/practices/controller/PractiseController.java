@@ -29,23 +29,17 @@ public class PractiseController {
 	
 	@GetMapping("/test")
 	public ResponseEntity<Map>  simple(){
-		
-	
 		return new ResponseEntity<Map>(practiseService.simple(),HttpStatus.OK);
 	}
 	
 	@GetMapping("/user/{id}")
 	public ResponseEntity<?>  simpleuser(@PathVariable Long id){
-		
-	
 		return new ResponseEntity<>(practiseService.simpleuser(id),HttpStatus.OK);
 	}
 	
 	
 	@PostMapping("/user")
     public ResponseEntity<?>  simpleuser(@RequestBody UserDTO userDto){
-		
-	
 		return new ResponseEntity<>(practiseService.getSimpleUser(userDto),HttpStatus.OK);
 	}
 	
