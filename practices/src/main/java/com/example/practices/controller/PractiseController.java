@@ -29,6 +29,7 @@ public class PractiseController {
 	
 	@GetMapping("/test")
 	public ResponseEntity<Map>  simple(){
+		
 		return new ResponseEntity<Map>(practiseService.simple(),HttpStatus.OK);
 	}
 	
