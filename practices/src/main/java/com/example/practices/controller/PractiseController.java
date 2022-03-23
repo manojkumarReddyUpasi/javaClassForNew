@@ -30,6 +30,7 @@ public class PractiseController {
 	@GetMapping("/test")
 	public ResponseEntity<Map>  simple(){
 		
+		System.out.println("space");
 		return new ResponseEntity<Map>(practiseService.simple(),HttpStatus.OK);
 	}
 	
