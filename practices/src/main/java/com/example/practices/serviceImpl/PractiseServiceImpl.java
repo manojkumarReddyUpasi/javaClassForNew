@@ -28,9 +28,6 @@ public class PractiseServiceImpl implements PractiseService {
 		st.put("name", "manoj");
 		st.put("course", "java");
 		st.put("be", "cool");
-
-
-
 		return st;
 	}
 
