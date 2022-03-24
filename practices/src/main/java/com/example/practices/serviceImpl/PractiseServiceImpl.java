@@ -28,13 +28,14 @@ public class PractiseServiceImpl implements PractiseService {
 		st.put("name", "manoj");
 		st.put("course", "java");
 		st.put("be", "cool");
+
+
+
 		return st;
 	}
 
 	@Override
 	public Optional<User> simpleuser(Long id) {
-		
-		
 		return userRepository.findById(id);
 	}
 
