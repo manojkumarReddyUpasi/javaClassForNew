@@ -99,4 +99,6 @@ public class PractiseController {
 		return new ResponseEntity<>(practiseService.getByJpaAddress(),HttpStatus.OK);
 	}
 
+
+
 }

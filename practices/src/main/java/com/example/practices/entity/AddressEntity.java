@@ -1,9 +1,10 @@
 package com.example.practices.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
-
+@Data
 @Entity
 @Table(name = "address")
 public class AddressEntity {
@@ -16,19 +17,5 @@ public class AddressEntity {
     @Column(name = "district_name",unique = true,nullable = false)
     private String districtName;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
 }
