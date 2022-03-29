@@ -6,6 +6,7 @@ public class UserDTO {
 	private String email;
 	private String fullName;
 	private String mobileNumber;
+
 	public String getName() {
 		return name;
 	}

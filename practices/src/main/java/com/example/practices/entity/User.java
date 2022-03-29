@@ -1,17 +1,16 @@
 package com.example.practices.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@JsonIgnore
 	Long id;
 	@Column(name="name",unique = true,nullable = false)
 	String name;
@@ -21,6 +20,9 @@ public class User {
 	String email;
 	@Column(name="mobile",unique = true)
 	String mobileNumber;
+
+	@ManyToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<AddressEntity> address;
 
 	public Long getId() {
 		return id;
@@ -61,8 +63,12 @@ public class User {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	
-	
-	
 
+	public Set<AddressEntity> getAddress() {
+		return address;
+	}
+
+	public void setAddress(Set<AddressEntity> address) {
+		this.address = address;
+	}
 }

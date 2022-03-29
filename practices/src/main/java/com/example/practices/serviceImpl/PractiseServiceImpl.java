@@ -1,14 +1,15 @@
 package com.example.practices.serviceImpl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
+import com.example.practices.dto.AddressUserDTO;
+import com.example.practices.dto.UserAddressDTO;
+import com.example.practices.dto.UserWithFieldsDTO;
+import com.example.practices.entity.AddressEntity;
+import com.example.practices.repostory.AddressEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.example.practices.dto.UserDTO;
@@ -21,6 +22,8 @@ public class PractiseServiceImpl implements PractiseService {
 	
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	AddressEntityRepository addressEntityRepository;
 	
 	@Override
 	public Map<String, String> simple() {
@@ -101,6 +104,69 @@ public class PractiseServiceImpl implements PractiseService {
 	public User getuserByNameAndMobileNumber(String name, String mobileNumber) {
 		
 		return userRepository.findByNameAndMobileNumber(name, mobileNumber);
+	}
+
+	@Override
+	public User createUserAddress(UserAddressDTO userDto) {
+
+		User user=userRepository.findByName(userDto.getName());
+		if(user!=null && user.getName()!=null){
+			user.setName(userDto.getName());
+			user.setEmail(userDto.getEmail());
+			user.setFullName(userDto.getFullName());
+			Set<AddressEntity> addressEn = new HashSet<>();
+			userDto.getAddress().forEach(item -> {
+				Optional<AddressEntity> addressEntity=addressEntityRepository.findByDistrictName(item.getDistrictName());
+				if(addressEntity.isPresent()){
+					AddressEntity addrEn=addressEntity.get();
+					addressEn.add(addrEn);
+				}else {
+					AddressEntity add1 = new AddressEntity();
+					add1.setDistrictName(item.getDistrictName());
+					addressEn.add(add1);
+				}
+
+
+			});
+			user.setMobileNumber(userDto.getMobileNumber());
+			user.setAddress(addressEn);
+			return userRepository.save(user);
+		}else {
+			User userEntity = new User();
+			userEntity.setName(userDto.getName());
+			userEntity.setEmail(userDto.getEmail());
+			userEntity.setFullName(userDto.getFullName());
+			Set<AddressEntity> addressEn = new HashSet<>();
+			userDto.getAddress().forEach(item -> {
+				Optional<AddressEntity> addressEntity=addressEntityRepository.findByDistrictName(item.getDistrictName());
+				if(addressEntity.isPresent()){
+					AddressEntity addrEn=addressEntity.get();
+					addressEn.add(addrEn);
+				}else {
+					AddressEntity add1 = new AddressEntity();
+					add1.setDistrictName(item.getDistrictName());
+					addressEn.add(add1);
+				}
+
+			});
+
+			userEntity.setMobileNumber(userDto.getMobileNumber());
+			userEntity.setAddress(addressEn);
+
+			return userRepository.save(userEntity);
+		}
+	}
+
+	@Override
+	public List<AddressUserDTO> getByAddress() {
+		return userRepository.findByAddress();
+
+	}
+
+	@Override
+	public List<UserWithFieldsDTO> getByJpaAddress() {
+
+		return userRepository.findByJpaAddreaa();
 	}
 
 }

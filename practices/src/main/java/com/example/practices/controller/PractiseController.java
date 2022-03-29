@@ -1,8 +1,11 @@
 package com.example.practices.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.example.practices.dto.AddressUserDTO;
+import com.example.practices.dto.UserAddressDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +76,27 @@ public class PractiseController {
 		
 		
 		return new ResponseEntity<>(practiseService.simpleuserDelete(id),HttpStatus.OK);
+	}
+
+
+	@PostMapping("/user/address")
+	public ResponseEntity<?>  createUserAddress(@RequestBody UserAddressDTO userDto){
+		return new ResponseEntity<>(practiseService.createUserAddress(userDto),HttpStatus.OK);
+	}
+
+	@GetMapping("/user/address")
+	public ResponseEntity<?>  getByAddress(){
+
+
+		return new ResponseEntity<>(practiseService.getByAddress(),HttpStatus.OK);
+	}
+
+
+	@GetMapping("/user/jpa/address")
+	public ResponseEntity<?>  getByJpaAddress(){
+
+
+		return new ResponseEntity<>(practiseService.getByJpaAddress(),HttpStatus.OK);
 	}
 
 }
