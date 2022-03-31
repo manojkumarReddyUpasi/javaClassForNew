@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.example.practices.dto.AddressUserDTO;
-import com.example.practices.dto.UserAddressDTO;
-import com.example.practices.dto.UserDTO;
-import com.example.practices.dto.UserWithFieldsDTO;
+import com.example.practices.dto.*;
+import com.example.practices.entity.AddressEntity;
 import com.example.practices.entity.User;
 
 public interface PractiseService {
@@ -31,5 +29,13 @@ public interface PractiseService {
 
 	List<AddressUserDTO> getByAddress();
 
-	List<UserWithFieldsDTO> getByJpaAddress();
+	List<UserWithFieldsDTO> getByJpaAddress(String addr);
+
+	List<AddressEntity> listAddress();
+
+	List<AddressEntity> nameOfDistrict(String state);
+
+	List<AddressEntity> nameOfSimpleDistrict(String state);
+
+	String createAddressAndSate(List<SateDTO> addreAndstae);
 }

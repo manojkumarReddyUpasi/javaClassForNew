@@ -4,26 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.practices.dto.AddressUserDTO;
-import com.example.practices.dto.UserAddressDTO;
+import com.example.practices.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.practices.dto.UserDTO;
 import com.example.practices.entity.User;
 import com.example.practices.service.PractiseService;
 
-@RestController
+@RestController()
+@RequestMapping("/user")
 public class PractiseController {
 	
 	
@@ -37,18 +28,18 @@ public class PractiseController {
 		return new ResponseEntity<Map>(practiseService.simple(),HttpStatus.OK);
 	}
 	
-	@GetMapping("/user/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?>  simpleuser(@PathVariable Long id){
 		return new ResponseEntity<>(practiseService.simpleuser(id),HttpStatus.OK);
 	}
 	
 	
-	@PostMapping("/user")
+	@PostMapping()
     public ResponseEntity<?>  simpleuser(@RequestBody UserDTO userDto){
 		return new ResponseEntity<>(practiseService.getSimpleUser(userDto),HttpStatus.OK);
 	}
 	
-	@PutMapping("/user")
+	@PutMapping()
     public ResponseEntity<?>  simpleuserToUpdate(@RequestParam Long id,@RequestBody UserDTO userDto){
 		
 		
@@ -56,14 +47,14 @@ public class PractiseController {
 	}
 	
 	
-	@GetMapping("/user")
+	@GetMapping()
 	public ResponseEntity<User>  getuserByName(@RequestParam(name = "name",required=true) String name){
 		
 	
 		return new ResponseEntity<User>(practiseService.getuserByName(name),HttpStatus.OK);
 	}
 	
-	@GetMapping("/user/mobile")
+	@GetMapping("/mobile")
 	public ResponseEntity<User>  getuserByNameAndMobileNumber(@RequestParam(name = "name",required=true) String name,@RequestParam(name = "mobileNumber",required=true) String mobileNumber){
 		
 	
@@ -71,7 +62,7 @@ public class PractiseController {
 	}
 	
 	
-	@DeleteMapping("/user/{id}")
+	@DeleteMapping("/{id}")
     public ResponseEntity<?>  simpleuserDelete(@PathVariable Long id){
 		
 		
@@ -79,12 +70,12 @@ public class PractiseController {
 	}
 
 
-	@PostMapping("/user/address")
+	@PostMapping("/address")
 	public ResponseEntity<?>  createUserAddress(@RequestBody UserAddressDTO userDto){
 		return new ResponseEntity<>(practiseService.createUserAddress(userDto),HttpStatus.OK);
 	}
 
-	@GetMapping("/user/address")
+	@GetMapping("/address")
 	public ResponseEntity<?>  getByAddress(){
 
 
@@ -92,13 +83,32 @@ public class PractiseController {
 	}
 
 
-	@GetMapping("/user/jpa/address")
-	public ResponseEntity<?>  getByJpaAddress(){
-
-
-		return new ResponseEntity<>(practiseService.getByJpaAddress(),HttpStatus.OK);
+	@GetMapping("/jpa/address/{addr}")
+	public ResponseEntity<?>  getByJpaAddress(@PathVariable String addr ){
+		return new ResponseEntity<>(practiseService.getByJpaAddress(addr),HttpStatus.OK);
 	}
 
 
+	@GetMapping("/list-address")
+	public ResponseEntity<?>  listAddress(){
+		return new ResponseEntity<>(practiseService.listAddress(),HttpStatus.OK);
+	}
+
+
+	@GetMapping("/state/name-district")
+	public ResponseEntity<?>  nameOfDistrict(@RequestParam(name = "state")  String state){
+		return new ResponseEntity<>(practiseService.nameOfDistrict(state),HttpStatus.OK);
+	}
+
+
+	@GetMapping("/state/simple/name-district")
+	public ResponseEntity<?>  nameOfSimpleDistrict(@RequestParam(name = "state")  String state){
+		return new ResponseEntity<>(practiseService.nameOfSimpleDistrict(state),HttpStatus.OK);
+	}
+
+	@PostMapping("/state/address")
+	public ResponseEntity<?>  createAddressAndSate(@RequestBody List<SateDTO> addreAndstae){
+		return new ResponseEntity<>(practiseService.createAddressAndSate(addreAndstae),HttpStatus.OK);
+	}
 
 }

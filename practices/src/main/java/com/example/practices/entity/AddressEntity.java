@@ -17,5 +17,9 @@ public class AddressEntity {
     @Column(name = "district_name",unique = true,nullable = false)
     private String districtName;
 
+    @ManyToOne
+    @JoinColumn(name = "state_id")
+    private  State state;
+
 
 }

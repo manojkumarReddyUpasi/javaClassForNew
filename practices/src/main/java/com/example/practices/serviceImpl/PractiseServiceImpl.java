@@ -4,15 +4,14 @@ import java.util.*;
 
 import javax.transaction.Transactional;
 
-import com.example.practices.dto.AddressUserDTO;
-import com.example.practices.dto.UserAddressDTO;
-import com.example.practices.dto.UserWithFieldsDTO;
+import com.example.practices.dto.*;
 import com.example.practices.entity.AddressEntity;
+import com.example.practices.entity.State;
 import com.example.practices.repostory.AddressEntityRepository;
+import com.example.practices.repostory.SateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.practices.dto.UserDTO;
 import com.example.practices.entity.User;
 import com.example.practices.repostory.UserRepository;
 import com.example.practices.service.PractiseService;
@@ -24,6 +23,9 @@ public class PractiseServiceImpl implements PractiseService {
 	UserRepository userRepository;
 	@Autowired
 	AddressEntityRepository addressEntityRepository;
+
+	@Autowired
+	SateRepository sateRepository;
 	
 	@Override
 	public Map<String, String> simple() {
@@ -164,9 +166,86 @@ public class PractiseServiceImpl implements PractiseService {
 	}
 
 	@Override
-	public List<UserWithFieldsDTO> getByJpaAddress() {
+	public List<UserWithFieldsDTO> getByJpaAddress(String addr) {
 
-		return userRepository.findByJpaAddreaa();
+		return userRepository.findByJpaAddreaa(addr);
+	}
+
+	@Override
+	public List<AddressEntity> listAddress() {
+		return addressEntityRepository.findAll();
+	}
+
+	@Override
+	public List<AddressEntity> nameOfDistrict(String state) {
+
+		Optional<State> st=sateRepository.findByName(state);
+
+		if(st.isPresent()){
+			State states=st.get();
+			return addressEntityRepository.findByStateEquals(states);
+		}else{
+			throw new RuntimeException("state is not found");
+		}
+
+	}
+
+	@Override
+	public List<AddressEntity> nameOfSimpleDistrict(String state) {
+		return addressEntityRepository.findByState_Name(state);
+	}
+
+	@Override
+	public String createAddressAndSate(List<SateDTO> addreAndstae) {
+
+		for( SateDTO  state: addreAndstae){
+			sateRepository.findByName(state.getName()).ifPresentOrElse(
+					(stateObj)->{
+
+						state.getDistricts().forEach(dist->{
+
+							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist.getDistrictName());
+						  if(adr.isPresent()){
+							  AddressEntity adrk=adr.get();
+							  adrk.setState(stateObj);
+							  addressEntityRepository.save(adrk);
+						  }else {
+							  AddressEntity neAdd=new AddressEntity();
+							  neAdd.setDistrictName(dist.getDistrictName());
+							  neAdd.setState(stateObj);
+							  addressEntityRepository.save(neAdd);
+						  }
+
+						});
+
+
+			} ,
+					()->{
+
+                    State st=new State();
+					st.setName(state.getName());
+					State str=sateRepository.save(st);
+
+
+						state.getDistricts().forEach(dist->{
+
+							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist.getDistrictName());
+							if(adr.isPresent()){
+								AddressEntity adrk=adr.get();
+								adrk.setState(str);
+								addressEntityRepository.save(adrk);
+							}else {
+								AddressEntity neAdd=new AddressEntity();
+								neAdd.setDistrictName(dist.getDistrictName());
+								neAdd.setState(str);
+								addressEntityRepository.save(neAdd);
+							}
+
+						});
+					});
+		}
+
+		return "success";
 	}
 
 }
