@@ -196,22 +196,23 @@ public class PractiseServiceImpl implements PractiseService {
 	}
 
 	@Override
+	@Transactional
 	public String createAddressAndSate(List<SateDTO> addreAndstae) {
 
-		for( SateDTO  state: addreAndstae){
-			sateRepository.findByName(state.getName()).ifPresentOrElse(
+		for( SateDTO  state: addreAndstae){  // to get list states
+			sateRepository.findByName(state.getName()).ifPresentOrElse( // find states
 					(stateObj)->{
 
 						state.getDistricts().forEach(dist->{
 
-							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist.getDistrictName());
+							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist);
 						  if(adr.isPresent()){
 							  AddressEntity adrk=adr.get();
 							  adrk.setState(stateObj);
 							  addressEntityRepository.save(adrk);
 						  }else {
 							  AddressEntity neAdd=new AddressEntity();
-							  neAdd.setDistrictName(dist.getDistrictName());
+							  neAdd.setDistrictName(dist);
 							  neAdd.setState(stateObj);
 							  addressEntityRepository.save(neAdd);
 						  }
@@ -222,21 +223,21 @@ public class PractiseServiceImpl implements PractiseService {
 			} ,
 					()->{
 
-                    State st=new State();
+                    State st=new State();  // new state
 					st.setName(state.getName());
 					State str=sateRepository.save(st);
 
 
 						state.getDistricts().forEach(dist->{
 
-							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist.getDistrictName());
+							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist);
 							if(adr.isPresent()){
 								AddressEntity adrk=adr.get();
 								adrk.setState(str);
 								addressEntityRepository.save(adrk);
 							}else {
 								AddressEntity neAdd=new AddressEntity();
-								neAdd.setDistrictName(dist.getDistrictName());
+								neAdd.setDistrictName(dist);
 								neAdd.setState(str);
 								addressEntityRepository.save(neAdd);
 							}
@@ -246,6 +247,11 @@ public class PractiseServiceImpl implements PractiseService {
 		}
 
 		return "success";
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userRepository.findAll();
 	}
 
 }

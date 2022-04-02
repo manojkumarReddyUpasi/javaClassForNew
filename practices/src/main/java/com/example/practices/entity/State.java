@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 public class State {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 

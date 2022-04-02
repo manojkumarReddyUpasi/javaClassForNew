@@ -5,16 +5,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.practices.dto.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.practices.entity.User;
 import com.example.practices.service.PractiseService;
 
+import javax.validation.Valid;
+
 @RestController()
 @RequestMapping("/user")
+@Validated
 public class PractiseController {
 	
 	
@@ -27,7 +34,12 @@ public class PractiseController {
 		System.out.println("space");
 		return new ResponseEntity<Map>(practiseService.simple(),HttpStatus.OK);
 	}
-	
+	@ApiOperation(value = "Find User ", response = Iterable.class, tags = "simpleuser")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success|OK"),
+			@ApiResponse(code = 401, message = "Not Authorized!"),
+			@ApiResponse(code = 403, message = "Forbidden!"),
+			@ApiResponse(code = 404, message = "Not Found!") })
 	@GetMapping("/{id}")
 	public ResponseEntity<?>  simpleuser(@PathVariable Long id){
 		return new ResponseEntity<>(practiseService.simpleuser(id),HttpStatus.OK);
@@ -35,7 +47,9 @@ public class PractiseController {
 	
 	
 	@PostMapping()
-    public ResponseEntity<?>  simpleuser(@RequestBody UserDTO userDto){
+    public ResponseEntity<?>  simpleuser( @Valid  @RequestBody UserDTO userDto){
+
+
 		return new ResponseEntity<>(practiseService.getSimpleUser(userDto),HttpStatus.OK);
 	}
 	
@@ -45,15 +59,27 @@ public class PractiseController {
 		
 		return new ResponseEntity<>(practiseService.updateUser(id,userDto),HttpStatus.OK);
 	}
-	
-	
+
+
+	@ApiOperation(value = "This Api will give one user by name ", response = Iterable.class, tags = "getUserByName")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success|OK"),
+			@ApiResponse(code = 401, message = "Not Authorized!"),
+			@ApiResponse(code = 403, message = "Forbidden!"),
+			@ApiResponse(code = 404, message = "Not Found!") })
 	@GetMapping()
 	public ResponseEntity<User>  getuserByName(@RequestParam(name = "name",required=true) String name){
 		
 	
 		return new ResponseEntity<User>(practiseService.getuserByName(name),HttpStatus.OK);
 	}
-	
+
+	@GetMapping("/all-users")
+	public ResponseEntity<?>  getAllUsers(){
+
+
+		return new ResponseEntity<>(practiseService.getUsers(),HttpStatus.OK);
+	}
 	@GetMapping("/mobile")
 	public ResponseEntity<User>  getuserByNameAndMobileNumber(@RequestParam(name = "name",required=true) String name,@RequestParam(name = "mobileNumber",required=true) String mobileNumber){
 		

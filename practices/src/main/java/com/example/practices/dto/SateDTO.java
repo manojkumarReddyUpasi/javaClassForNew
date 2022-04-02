@@ -7,6 +7,5 @@ import java.util.List;
 public class SateDTO {
 
     String name;
-    List<AddressAndStateDTO> districts;
-
+    List<String> districts;
 }

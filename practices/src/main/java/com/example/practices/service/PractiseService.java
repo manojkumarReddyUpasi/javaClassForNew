@@ -38,4 +38,6 @@ public interface PractiseService {
 	List<AddressEntity> nameOfSimpleDistrict(String state);
 
 	String createAddressAndSate(List<SateDTO> addreAndstae);
+
+    List<User> getUsers();
 }

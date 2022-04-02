@@ -1,7 +1,10 @@
 package com.example.practices.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,7 +25,9 @@ public class User {
 	@Column(name="mobile",unique = true)
 	String mobileNumber;
 
-	@ManyToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Getter(AccessLevel.NONE)
+	//@Setter(AccessLevel.NONE)
+	@ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AddressEntity> address;
 
 
