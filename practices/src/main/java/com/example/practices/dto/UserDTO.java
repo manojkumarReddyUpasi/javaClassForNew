@@ -2,7 +2,9 @@ package com.example.practices.dto;
 
 import lombok.Data;
 
+
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -15,12 +17,12 @@ public class UserDTO {
 
 	@Email(message = "please give proper emil")
 	@NotEmpty
-	@Size(min = 2, message = "email should have at least 2 characters")
+	@Size(min = 2, message = "email should be proper ")
 	private String email;
 	private String fullName;
 
 	@NotEmpty
-	@Size(min = 10,max = 10,message = "mobileNumber should have at least 2 characters")
+	@Size(min = 10,max = 10,message = "mobileNumber should have min 10 and max 10 characters")
 	private String mobileNumber;
 
 	  

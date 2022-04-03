@@ -18,6 +18,10 @@ import com.example.practices.entity.User;
 import com.example.practices.service.PractiseService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @RestController()
 @RequestMapping("/user")
@@ -54,7 +58,7 @@ public class PractiseController {
 	}
 	
 	@PutMapping()
-    public ResponseEntity<?>  simpleuserToUpdate(@RequestParam Long id,@RequestBody UserDTO userDto){
+    public ResponseEntity<?>  simpleuserToUpdate(@RequestParam Long id, @Valid @RequestBody UserDTO userDto){
 		
 		
 		return new ResponseEntity<>(practiseService.updateUser(id,userDto),HttpStatus.OK);
@@ -89,7 +93,7 @@ public class PractiseController {
 	
 	
 	@DeleteMapping("/{id}")
-    public ResponseEntity<?>  simpleuserDelete(@PathVariable Long id){
+    public ResponseEntity<?>  simpleuserDelete(@PathVariable(value = "id")  @Min( value = 2,message = "please add min 2 char for id") Long id){
 		
 		
 		return new ResponseEntity<>(practiseService.simpleuserDelete(id),HttpStatus.OK);
