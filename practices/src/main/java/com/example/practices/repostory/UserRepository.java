@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 	User findByName(String name);
 	User  findByNameAndMobileNumber(String name,String mobilenumber);
 
-	@Query(value = "select  distinct ad.district_name , us.name from user us  INNER JOIN  user_address ua on us.id = ua.user_id inner JOIN address ad on ad.district_name='bangalor'",nativeQuery = true)
+	@Query(value = "select  distinct ad , us.name from user us  INNER JOIN  user_address ua on us.id = ua.user_id inner JOIN address ad on ad.district_name='bangalor'",nativeQuery = true)
 	List<AddressUserDTO> findByAddress();
 
 	@Query(value = "select new com.example.practices.dto.UserWithFieldsDTO(u.name,ad.districtName) from User u  join u.address ad on ad.districtName=:addr")

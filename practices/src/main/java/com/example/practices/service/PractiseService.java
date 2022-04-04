@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.example.practices.dto.*;
 import com.example.practices.entity.AddressEntity;
+import com.example.practices.entity.PanCard;
 import com.example.practices.entity.User;
 
 public interface PractiseService {
@@ -40,4 +41,6 @@ public interface PractiseService {
 	String createAddressAndSate(List<SateDTO> addreAndstae);
 
     List<User> getUsers();
+
+	List<PanCard> listOfPanCards();
 }

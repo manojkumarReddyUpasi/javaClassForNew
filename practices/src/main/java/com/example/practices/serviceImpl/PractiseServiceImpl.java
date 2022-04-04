@@ -6,8 +6,10 @@ import javax.transaction.Transactional;
 
 import com.example.practices.dto.*;
 import com.example.practices.entity.AddressEntity;
+import com.example.practices.entity.PanCard;
 import com.example.practices.entity.State;
 import com.example.practices.repostory.AddressEntityRepository;
+import com.example.practices.repostory.PanCarRepository;
 import com.example.practices.repostory.SateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,9 @@ public class PractiseServiceImpl implements PractiseService {
 
 	@Autowired
 	SateRepository sateRepository;
-	
+
+	@Autowired
+	PanCarRepository  panCardRepositor;
 	@Override
 	public Map<String, String> simple() {
 		Map<String , String> st=new HashMap<>();
@@ -161,6 +165,7 @@ public class PractiseServiceImpl implements PractiseService {
 
 	@Override
 	public List<AddressUserDTO> getByAddress() {
+
 		return userRepository.findByAddress();
 
 	}
@@ -252,6 +257,11 @@ public class PractiseServiceImpl implements PractiseService {
 	@Override
 	public List<User> getUsers() {
 		return userRepository.findAll();
+	}
+
+	@Override
+	public List<PanCard> listOfPanCards() {
+      return  panCardRepositor.findAll();
 	}
 
 }

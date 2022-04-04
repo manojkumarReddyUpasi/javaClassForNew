@@ -30,5 +30,7 @@ public class User {
 	@ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<AddressEntity> address;
 
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pan_id", referencedColumnName = "id")
+	private  PanCard panCard;
 }

@@ -101,7 +101,7 @@ public class PractiseController {
 
 
 	@PostMapping("/address")
-	public ResponseEntity<?>  createUserAddress(@RequestBody UserAddressDTO userDto){
+	public ResponseEntity<?>  createUserAddress( @Valid @RequestBody UserAddressDTO userDto){
 		return new ResponseEntity<>(practiseService.createUserAddress(userDto),HttpStatus.OK);
 	}
 
@@ -140,5 +140,12 @@ public class PractiseController {
 	public ResponseEntity<?>  createAddressAndSate(@RequestBody List<SateDTO> addreAndstae){
 		return new ResponseEntity<>(practiseService.createAddressAndSate(addreAndstae),HttpStatus.OK);
 	}
+
+
+	@GetMapping("/list/pancard")
+	public ResponseEntity<?>  nameOfSimpleDistrict(){
+		return new ResponseEntity<>(practiseService.listOfPanCards(),HttpStatus.OK);
+	}
+
 
 }
