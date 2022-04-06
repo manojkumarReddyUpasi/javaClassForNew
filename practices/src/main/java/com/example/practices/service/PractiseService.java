@@ -43,4 +43,10 @@ public interface PractiseService {
     List<User> getUsers();
 
 	List<PanCard> listOfPanCards();
+
+	User userPanCard(Long userId, Long panId);
+
+	String deletpan(Long panId);
+
+	PanCard createpan(Map<String, Long> mpPan);
 }

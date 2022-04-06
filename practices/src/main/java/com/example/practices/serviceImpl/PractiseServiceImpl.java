@@ -1,6 +1,7 @@
 package com.example.practices.serviceImpl;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -8,6 +9,7 @@ import com.example.practices.dto.*;
 import com.example.practices.entity.AddressEntity;
 import com.example.practices.entity.PanCard;
 import com.example.practices.entity.State;
+import com.example.practices.exception.PracticeNotFound;
 import com.example.practices.repostory.AddressEntityRepository;
 import com.example.practices.repostory.PanCarRepository;
 import com.example.practices.repostory.SateRepository;
@@ -209,7 +211,6 @@ public class PractiseServiceImpl implements PractiseService {
 					(stateObj)->{
 
 						state.getDistricts().forEach(dist->{
-
 							Optional<AddressEntity> adr=addressEntityRepository.findByDistrictName(dist);
 						  if(adr.isPresent()){
 							  AddressEntity adrk=adr.get();
@@ -262,6 +263,48 @@ public class PractiseServiceImpl implements PractiseService {
 	@Override
 	public List<PanCard> listOfPanCards() {
       return  panCardRepositor.findAll();
+	}
+
+	@Override
+	public User userPanCard(Long userId, Long panId) {
+
+		User user=userRepository.findById(userId).orElseThrow(()-> new PracticeNotFound("user not found"));
+        PanCard panCard=panCardRepositor.findById(panId).orElseThrow(()-> new PracticeNotFound("pan card is not found"));
+		user.setPanCard(panCard);
+
+		return userRepository.save(user);
+	}
+
+	@Override
+	@Transactional
+	public String deletpan(Long panId) {
+
+		PanCard pan=panCardRepositor.findById(panId).orElseThrow(()-> new PracticeNotFound("pan card is not found"));
+
+		List<User> users=userRepository.findByPanCard(pan);
+
+		List<User> listUsers =users.stream().map(us->{
+
+			us.setPanCard(null);
+			return us;
+		}).collect(Collectors.toList());
+		userRepository.saveAll(listUsers);
+		panCardRepositor.delete(pan);
+		return "sucess";
+	}
+
+	@Override
+	public PanCard createpan(Map<String, Long> mpPan) {
+
+        Optional<PanCard> pans=panCardRepositor.findByPanNumber(mpPan.get("panNumber"));
+		if(pans.isPresent()){
+			throw new PracticeNotFound("pan is alredy ter");
+		}else {
+			PanCard pan=new PanCard();
+			pan.setPanNumber(mpPan.get("panNumber"));
+			return panCardRepositor.save(pan);
+		}
+
 	}
 
 }

@@ -131,6 +131,11 @@ public class PractiseController {
 	}
 
 
+	@GetMapping("/pancard")
+	public ResponseEntity<?>  userPanCard(@RequestParam(name = "userId")  Long userId,@RequestParam(name = "panId")  Long panId){
+		return new ResponseEntity<>(practiseService.userPanCard(userId,panId),HttpStatus.OK);
+	}
+
 	@GetMapping("/state/simple/name-district")
 	public ResponseEntity<?>  nameOfSimpleDistrict(@RequestParam(name = "state")  String state){
 		return new ResponseEntity<>(practiseService.nameOfSimpleDistrict(state),HttpStatus.OK);
@@ -141,6 +146,15 @@ public class PractiseController {
 		return new ResponseEntity<>(practiseService.createAddressAndSate(addreAndstae),HttpStatus.OK);
 	}
 
+	@DeleteMapping ("/pancard")
+	public ResponseEntity<?>  deletpan(@RequestParam(name = "panId")  Long panId){
+		return new ResponseEntity<>(practiseService.deletpan(panId),HttpStatus.OK);
+	}
+
+	@PostMapping("pancard")
+	public ResponseEntity<?>  createpan(@RequestBody Map<String,Long> mpPan){
+		return new ResponseEntity<>(practiseService.createpan(mpPan),HttpStatus.OK);
+	}
 
 	@GetMapping("/list/pancard")
 	public ResponseEntity<?>  nameOfSimpleDistrict(){

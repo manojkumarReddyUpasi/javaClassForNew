@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.practices.dto.AddressUserDTO;
 import com.example.practices.dto.UserWithFieldsDTO;
+import com.example.practices.entity.PanCard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +25,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 	List<UserWithFieldsDTO>  findByJpaAddreaa(String addr);
 
 
-
+	List<User> findByPanCard(PanCard id);
 }

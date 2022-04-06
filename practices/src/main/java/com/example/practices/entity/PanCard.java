@@ -16,4 +16,6 @@ public class PanCard {
 
     @Column(name="panNumber" , nullable = false,unique = true)
     Long panNumber;
+
+
 }

@@ -49,4 +49,13 @@ public class CustomExceptionHandle  {
         return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+
+    @ExceptionHandler(PracticeNotFound.class) // exception handled
+    public ResponseEntity<ErrorResponse> handlePracticeNotFound(PracticeNotFound ex) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+        ErrorResponse error = new ErrorResponse("Internal Error ", details);
+        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

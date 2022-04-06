@@ -14,7 +14,6 @@ import java.util.Set;
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@JsonIgnore
 	Long id;
 	@Column(name="name",unique = true,nullable = false)
 	String name;
@@ -32,5 +31,6 @@ public class User {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pan_id", referencedColumnName = "id")
+
 	private  PanCard panCard;
 }
